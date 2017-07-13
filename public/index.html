@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>西安交通大学用户信息查询</title>
+    <link rel="stylesheet" href="dist/css/bulma.min.css">
+    <style>
+        .user-photo {
+            height: 5em;
+        }
+    </style>
+</head>
+<body>
+    <div id="root">
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <p class="navbar-item">
+                    <span>西安交通大学用户信息查询</span>
+                </p>
+            </div>
+            <div class="navbar-end">
+                <a href="?logout" class="navbar-item has-text-right">
+                    <span>退出登录</span>
+                </a>
+            </div>
+        </nav>
+        <section class="hero is-light">
+            <div class="hero-body">
+                <div class="container">
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">查询方法</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field is-narrow">
+                                <div class="control">
+                                    <div class="select is-fullwidth">
+                                        <select v-model="action">
+                                            <option v-for="option in actions" :value="option.value" v-text="option.text"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label is-normal">
+                            <label class="label">查询内容</label>
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control">
+                                    <input class="input" type="text" :placeholder="actionText" v-model="value" @keyup.13="getUserInfo">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field is-horizontal">
+                        <div class="field-label">
+                            <!-- Left empty for spacing -->
+                        </div>
+                        <div class="field-body">
+                            <div class="field">
+                                <div class="control">
+                                    <button class="button is-primary" @click="getUserInfo">
+                                        查询
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section">
+            <div class="container">
+                <nav class="breadcrumb">
+                    <ul>
+                        <li><a>西安交通大学用户信息查询</a></li>
+                        <li><a v-text="actionText"></a></li>
+                        <li class="is-active"><a v-text="value"></a></li>
+                    </ul>
+                </nav>
+                <div class="box" v-for="item in userInfo">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>照片</td>
+                                <td><img class="user-photo" :src="'api.php?action=photo&value=' + item.userno" alt="照片"></td>
+                            </tr>
+                            <tr v-for="userInfoKey in userInfoKeys">
+                                <td v-text="userInfoKey.name"></td>
+                                <td v-text="item[userInfoKey.key]"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script src="dist/js/vue.min.js"></script>
+    <script src="dist/js/axios.min.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>

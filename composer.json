@@ -1,0 +1,11 @@
+{
+    "require": {
+        "jasig/phpcas": "^1.3"
+    },
+    "autoload": {
+        "files": [
+            "app/common.php",
+            "app/XjtuUserInfo.php"
+        ]
+    }
+}
